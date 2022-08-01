@@ -1,0 +1,33 @@
+-hosts: all
+ become: true
+
+ tasks:
+   - name: "install application mpv" 
+    apt: 
+      name: 
+        - mpv
+      state: present
+      update_cash: true
+
+  - name: "desktop shortcut and autostart"
+#make shortcut executable
+    #file: path=/usr/share/applications/mpv.desktop state=a+x
+    file: dest=/usr/share/applications/mpv.desktop mode=a+x
+
+#cp shortcut to autostart
+    copy:
+      src: /usr/share/applications/mpv.desktop
+      dest: /etc/xdg/autostart/
+#cp shortcut to desktop
+    copy:
+      src: /usr/share/applications/mpv.desktop
+      dest: /home/user2/Desktop/mpv.desktop
+      become_user: user2
+
+ - name: "samba"
+ sudo apt install autofs
+
+
+
+
+
